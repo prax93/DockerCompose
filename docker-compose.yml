@@ -15,12 +15,32 @@ services:
       - TZ=Europe/London
       - DELUGE_LOGLEVEL=error 
     volumes:
-      - /mnt/c/Users/u238471/Privat/DockerCompose/Docker/deluge/config:/config
-      - /mnt/c/Users/u238471/Privat/DockerCompose/Docker/deluge/downloads:/downloads
+      - deluge_config:/config
+      - deluge_downloads:/downloads
     ports:
       - 8112:8112
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - plex_config:/config
+      - deluge_downloads:/tv
+      - deluge_movies:/movies
+    restart: unless-stopped
+
+
+
+# Volumes Creation 
     
-  
+volumes:
+  deluge_config:
+  deluge_downloads:
+  plex_config:
