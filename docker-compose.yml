@@ -13,10 +13,10 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - DELUGE_LOGLEVEL=error #optional
+      - DELUGE_LOGLEVEL=error 
     volumes:
-      - /path/to/deluge/config:/config
-      - /path/to/your/downloads:/downloads
+      - /mnt/c/Users/u238471/Privat/DockerCompose/Docker/deluge/config:/config
+      - /mnt/c/Users/u238471/Privat/DockerCompose/Docker/deluge/downloads:/downloads
     ports:
       - 8112:8112
       - 6881:6881
