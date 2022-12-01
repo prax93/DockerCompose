@@ -14,7 +14,7 @@ Ansible -Create Script
 ---------------------------
 <b>Deluge:</b>
 - deluge_config
-- deluge_downloads
+- deluge_download
 
 <b>Plex Mediaserver:</b>
 - plex_config
