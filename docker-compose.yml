@@ -6,6 +6,8 @@ services:
     image: nginx
     ports:
       - 80:80
+
+  #Image needs to be changed to Transmission
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
@@ -15,6 +17,8 @@ services:
       - TZ=Europe/London
       - DELUGE_LOGLEVEL=error 
     volumes:
+    # Volumes ~/Movies:/downloads
+    # Volumes ~/Tv:/downloads
       - deluge_config:/config
       - deluge_downloads:/downloads
     ports:
