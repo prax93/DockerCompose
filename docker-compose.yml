@@ -36,7 +36,8 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - plex_config:/config:rw
-      - ${MOUNTPOINT}:/data:rw
+      - ${MOUNTPOINT}/Moives:/movies:rw
+      - ${MOUNTPOINT}/Tv:/tv:rw
     
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -64,5 +65,5 @@ services:
   #Watchtower
 
 
-volumes:
-  vaultwarden:
+
+
