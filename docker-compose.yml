@@ -1,34 +1,26 @@
 version: '3'
-
 services:
-  Web:
-    container_name: ${NGINX}
-    image: nginx
-    ports:
-      - 80:80
 
-  #Image needs to be changed to Transmission
-  deluge:
-    image: lscr.io/linuxserver/deluge:latest
-    container_name: deluge
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
-      - DELUGE_LOGLEVEL=error 
+      - TZ=Europe/Zurich
     volumes:
-    # Volumes ~/Movies:/downloads
-    # Volumes ~/Tv:/downloads
-      - deluge_config:/config
-      - deluge_downloads:/downloads
+      - /path/to/data:/config
+      - ${MOUNTPOINT}/Movies:/downloads/Movies
+      - ${MOUNTPOINT}/Tv:/downloads/Tv
     ports:
-      - 8112:8112
-      - 6881:6881
-      - 6881:6881/udp
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
     restart: unless-stopped
+
   plex:
     container_name: plex
-    image: plexinc/pms-docker
+    image: plexinc/pms-docker:latest
     restart: unless-stopped
     ports:
       - 32400:32400/tcp
@@ -44,13 +36,33 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - plex_config:/config:rw
-      - deluge_downloads:/data:rw
-
-
-
-# Volumes Creation 
+      - ${MOUNTPOINT}:/data:rw
     
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+    volumes:
+      - /path/to/library:/config
+      - ${MOUNTPOINT}/Tv:/data/tvshows
+      - ${MOUNTPOINT}/Movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
+
+  
+  #Nextcloud
+
+  #Bitwarden
+
+  #Watchtower
+
+
 volumes:
-  deluge_config:
-  deluge_downloads:
-  plex_config:
+  vaultwarden:
