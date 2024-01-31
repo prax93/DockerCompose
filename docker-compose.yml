@@ -1,6 +1,7 @@
 version: '3'
 services:
 
+
   transmission:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
@@ -10,8 +11,8 @@ services:
       - TZ=Europe/Zurich
     volumes:
       - /path/to/data:/config
-      - ${MOUNTPOINT}/Movies:/downloads/Movies
-      - ${MOUNTPOINT}/Tv:/downloads/Tv
+      - ${MOVIES}:/downloads/Movies
+      - ${TV}:/downloads/Tv
     ports:
       - 9091:9091
       - 51413:51413
@@ -21,7 +22,6 @@ services:
   plex:
     container_name: plex
     image: plexinc/pms-docker:latest
-    restart: unless-stopped
     ports:
       - 32400:32400/tcp
       - 3005:3005/tcp
@@ -36,8 +36,9 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - plex_config:/config:rw
-      - ${MOUNTPOINT}/Moives:/movies:rw
-      - ${MOUNTPOINT}/Tv:/tv:rw
+      - ${MOVIES}:/movies:rw
+      - ${TV}:/tv:rw
+    restart: unless-stopped
     
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -48,13 +49,10 @@ services:
       - TZ=Europe/Zurich
     volumes:
       - /path/to/library:/config
-      - ${MOUNTPOINT}/Tv:/data/tvshows
-      - ${MOUNTPOINT}/Movies:/data/movies
+      - ${TV}:/data/tvshows
+      - ${MOVIES}:/data/movies
     ports:
       - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
     restart: unless-stopped
 
   
