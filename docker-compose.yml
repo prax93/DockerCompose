@@ -1,7 +1,6 @@
 version: '3'
 services:
 
-
   transmission:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
@@ -55,12 +54,6 @@ services:
       - 8096:8096
     restart: unless-stopped
 
-  
-  #Nextcloud
-
-  #Bitwarden
-
-  #Watchtower
 
 
 
